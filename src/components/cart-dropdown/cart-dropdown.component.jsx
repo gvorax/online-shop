@@ -1,36 +1,42 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 import { createStructuredSelector } from 'reselect';
 import { selectCartItems } from '../../redux/cart/cart.selector';
 import { connect } from 'react-redux';
 import { toggleCartHidden } from '../../redux/cart/cart.action';
 
-import './cart-dropdown.styles.scss';
+import {
+  CartDropdownButton,
+  CartItemsContainer,
+  DropdownContainer,
+  EmptyMessageContainer,
+} from './cart-dropdown.styles';
 
 const CartDropdown = ({ cartItems, dispatch }) => {
   let navigate = useNavigate();
 
   return (
-    <div className="cart-dropdown">
-      <div className="cart-items">
-        {cartItems.length ? cartItems.map((cartItem) => (
-          <CartItem key={cartItem.id} item={cartItem} />
-        )) : (
-          <span className='empty-message'>Your cart is empty</span>
+    <DropdownContainer>
+      <CartItemsContainer>
+        {cartItems.length ? (
+          cartItems.map((cartItem) => (
+            <CartItem key={cartItem.id} item={cartItem} />
+          ))
+        ) : (
+          <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
         )}
-      </div>
-      <CustomButton
+      </CartItemsContainer>
+      <CartDropdownButton
         onClick={() => {
           navigate('/checkout', { replace: true });
           dispatch(toggleCartHidden());
         }}
       >
         GO TO CHECKOUT
-      </CustomButton>
-    </div>
+      </CartDropdownButton>
+    </DropdownContainer>
   );
 };
 

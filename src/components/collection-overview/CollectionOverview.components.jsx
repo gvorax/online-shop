@@ -5,17 +5,15 @@ import CollectionPreview from '../../components/collection-preview/collection-pr
 import { createStructuredSelector } from 'reselect';
 import { selectCollectionsForPreview } from '../../redux/shop/shop.selector';
 
-import './CollectionOverview.styles.scss';
+import { CollectionOverviewContainer } from './CollectionOverview.styles';
 
-
-const CollectionOverview = ({collections}) => {
-
+const CollectionOverview = ({ collections }) => {
   return (
-    <div className="collection-overview">
+    <CollectionOverviewContainer>
       {collections.map(({ id, ...otherCollectionProps }) => (
         <CollectionPreview key={id} {...otherCollectionProps} />
       ))}
-    </div>
+    </CollectionOverviewContainer>
   );
 };
 
